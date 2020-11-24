@@ -18,27 +18,65 @@ class Movie {
             director,
             plot,
             poster)
-          VALUES ($1, $2, $3, $4, $5, $6)
-          RETURNING imdbID, title, year, director, plot, poster, upvote, downvote`,
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING imdbID, title, year, director, plot, poster, upvote, downvote`,
       [imdbID, title, year, director, plot, poster]);
 
   return result.rows[0];
-
   }
 
   static async get(imdbID) {
+    const result = await db.query(
+      `SELECT imdbID,
+              title,
+              year,
+              director,
+              plot,
+              poster,
+              upvote,
+              downvote
+        FROM movies
+        WHERE imdbID = $1`,
+        [imdbID]);
 
+    return result.rows[0];
   }
 
   static async getAll() {
+    const result = await db.query(
+      `SELECT imdbID,
+              title,
+              year,
+              director,
+              plot,
+              poster,
+              upvote,
+              downvote
+        FROM movies`);
 
+    return result.rows;
   }
 
   static async upvote(imdbID) {
-
+    const result = await db.query(
+      `UPDATE movies
+       SET upvote=upvote + 1
+       WHERE imdbID = $1
+       RETURNING upvote`,
+       [imdbID]);
+    
+    return result.rows[0];
   }
 
   static async downvote(imdbID) {
+    const result = await db.query(
+      `UPDATE movies
+       SET downvote=downvote - 1
+       WHERE imdbID = $1
+       RETURNING downvote`,
+       [imdbID]);
+    
+    return result.rows[0];
 
   }
 
