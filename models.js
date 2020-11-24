@@ -1,6 +1,7 @@
 /** Database model classes for the Movies API */
 
 const db = require("./db");
+const axios = require("axios");
 const { OMDB_API_KEY } = require("./config");
 const OMDB_BASE_URL = "http://www.omdbapi.com/?";
 
@@ -43,9 +44,28 @@ class Movie {
 
   static async searchOMDB(title) {
 
+    try {
+      
+      const result = await axios.get(`${OMDB_BASE_URL}apikey=${OMDB_API_KEY}&s=${title}`);
+      return result.data.Search;
+
+    } catch (err) {
+
+      
+
+    }
+
   }
 
-  static async getDetailsOMDB(title) {
+  static async getDetailsOMDB(imdbID) {
+    try {
+
+      const result = await axios.get(`${OMDB_BASE_URL}apikey=${OMDB_API_KEY}&i=${imdbID}`);
+      return result.data;
+
+    } catch (err) {
+
+    }
 
   }
 

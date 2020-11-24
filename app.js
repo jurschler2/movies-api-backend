@@ -3,13 +3,19 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const moviesRoutes = require("./routes/movies");
 
 const app = express();
 
 app.use(morgan("tiny"));
 app.use(express.json());
-app.use(cors());
+let corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+}
+app.use(cors(corsOptions));
 
+app.use(moviesRoutes);
 
 /** 404 Not Found Error Handler */
 
@@ -28,3 +34,5 @@ app.use(function (err, req, res, next) {
     message: err.message,
   });
 });
+
+module.exports = app;
