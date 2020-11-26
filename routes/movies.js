@@ -55,8 +55,8 @@ router.post("/:id/upvote", async function(req, res, next) {
   try {
 
     let imdbID = req.params.id;
-    let vote = await Movie.upvote(imdbID);
-    return res.json({"upvote": vote});
+    let upvote = await Movie.upvote(imdbID);
+    return res.json({upvote});
 
   } catch (err) {
 

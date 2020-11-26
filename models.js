@@ -12,14 +12,14 @@ class Movie {
   static async create({imdbID, title, year, director, plot, poster}) {
     const result = await db.query(
       `INSERT INTO movies (
-            imdbID,
+            "imdbID",
             title,
             year,
             director,
             plot,
             poster)
        VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING imdbID, title, year, director, plot, poster, upvote, downvote`,
+       RETURNING "imdbID", title, year, director, plot, poster, upvote, downvote`,
       [imdbID, title, year, director, plot, poster]);
 
   return result.rows[0];
@@ -27,7 +27,7 @@ class Movie {
 
   static async get(imdbID) {
     const result = await db.query(
-      `SELECT imdbID,
+      `SELECT "imdbID",
               title,
               year,
               director,
@@ -36,7 +36,7 @@ class Movie {
               upvote,
               downvote
         FROM movies
-        WHERE imdbID = $1`,
+        WHERE "imdbID" = $1`,
         [imdbID]);
 
     return result.rows[0];
@@ -44,7 +44,7 @@ class Movie {
 
   static async getAll() {
     const result = await db.query(
-      `SELECT imdbID,
+      `SELECT "imdbID",
               title,
               year,
               director,
@@ -61,7 +61,7 @@ class Movie {
     const result = await db.query(
       `UPDATE movies
        SET upvote=upvote + 1
-       WHERE imdbID = $1
+       WHERE "imdbID" = $1
        RETURNING upvote`,
        [imdbID]);
     
@@ -72,7 +72,7 @@ class Movie {
     const result = await db.query(
       `UPDATE movies
        SET downvote=downvote - 1
-       WHERE imdbID = $1
+       WHERE "imdbID" = $1
        RETURNING downvote`,
        [imdbID]);
     
