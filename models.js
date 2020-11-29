@@ -22,7 +22,7 @@ class Movie {
        RETURNING "imdbID", title, year, director, plot, poster, upvote, downvote`,
       [imdbID, title, year, director, plot, poster]);
 
-  return result.rows[0];
+    return result.rows[0];
   }
 
   static async get(imdbID) {
@@ -77,7 +77,6 @@ class Movie {
        [imdbID]);
     
     return result.rows[0];
-
   }
 
   static async searchOMDB(title) {
@@ -89,7 +88,7 @@ class Movie {
 
     } catch (err) {
 
-      
+      console.log("Failed to search OMDB");
 
     }
 
@@ -102,6 +101,8 @@ class Movie {
       return result.data;
 
     } catch (err) {
+
+      console.log("Failed to get a movie from OMDB");
 
     }
 
